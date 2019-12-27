@@ -63,7 +63,7 @@ class ViewController: UIViewController {
         
         if segue.identifier == "next1"{
             let nextVC:NextViewController = segue.destination as! NextViewController
-            nextVC.passedUserID = user.uid
+            nextVC.passedUserID = user.uid!
         }
     }
     

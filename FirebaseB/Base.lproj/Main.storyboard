@@ -70,11 +70,29 @@
                                     <action selector="openAlbum:" destination="Ich-ks-TQY" eventType="touchUpInside" id="jUM-b5-Ji3"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SyO-og-LbN">
+                                <rect key="frame" x="64" y="189" width="287" height="270"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FBF-k4-1gy">
+                                <rect key="frame" x="106" y="708" width="203" height="42"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <state key="normal" title="プロフィール送信"/>
+                                <connections>
+                                    <action selector="loginButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8Zb-8H-d7u"/>
+                                    <action selector="openAlbum:" destination="Ich-ks-TQY" eventType="touchUpInside" id="SBg-cr-t4x"/>
+                                    <action selector="postAction:" destination="Ich-ks-TQY" eventType="touchUpInside" id="prO-Jb-XsE"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="uoN-VH-lfF"/>
                     </view>
                     <navigationItem key="navigationItem" id="r7c-lA-xjU"/>
+                    <connections>
+                        <outlet property="profileImage" destination="SyO-og-LbN" id="MZ6-GZ-qe4"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uTd-vd-tPT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

@@ -26,6 +26,9 @@ C.プロフィールページとして、DBから自分のユーザー名、user
 class NextViewController: UIViewController,UIImagePickerControllerDelegate {
     
     
+    @IBOutlet weak var profileImage: UIImageView!
+    
+    
     //匿名ログインIDをViewControllerからとってくる
     var passedUserID = ""
 
@@ -72,6 +75,77 @@ class NextViewController: UIViewController,UIImagePickerControllerDelegate {
         }
     }
     
+    
+    @IBAction func postAction(_ sender: Any) {
+        
+        //DBのchildを決めていく。つまり、DatabaseのURLを取得していく
+        let timeLineDB = Database.database().reference().child("timeLine").childByAutoId()
+        
+        //ストレージサーバーのURLを取得していく
+        //URLの場所はFirebaseのStorageに記載
+        //(DatabaseとStorageではURLが違う)
+        
+        let storage = Storage.storage().reference(forURL: /*"gs://swift5firebaseanonymousl-f7c71.appspot.com/"*/)
+         
+         
+         //データを更新、削除するためのパスを作成する。
+         //フォルダを作成していく。ここに画像が入っていく。
+         //フォルダの名前はそれぞれ、Users Contentsとしておく
+         let key = timeLineDB.child("Users").childByAutoId().key
+         let key2 = timeLineDB.child("Contens").childByAutoId().key
+        
+        /*
+         参照を作成する
+         ファイルをアップロードするには、まず Cloud Storage 内のファイルをアップロードする場所への Cloud Storage 参照を作成します。
+         ストレージ ルートに子パスを付加することで、参照を作成できます。
+         */
+        let imageRef = storage.child("Users").child("\(String(describing: key!)).jpg")
+        let imageRef2 = storage.child("Contents").child("\(String(describing: key2!)).jpg")
+        var userProfileImageData:Data = Data()
+        var contentImageData:Data = Data()
+        
+        
+        //ここは画像を圧縮している箇所
+        //何か、userProfileImageView.imageに何かデータが入っていれば
+        if userProfileImageView.image != nil {
+            
+            //そのままの画像データでStorageサーバーに送ると、かなり大きいので100分の1に圧縮している
+            userProfileImageData = (userProfileImageView.image?.jpegData(compressionQuality: 0.01))!
+        }
+        
+        if contentImageView.image != nil {
+            
+            //そのままの画像データでStorageサーバーに送ると、かなり大きいので100分の1に圧縮している
+            contentImageData = (contentImageView.image?.jpegData(compressionQuality: 0.01))!
+        }
+        
+        /*
+         メモリ内のデータからアップロードする
+         */
+        //アップロードタスク。デバイスからStorageサーバーに画像を送信
+        //クロージャーはuserProfileImageDataは手動で作成、ccontentImageDataは自動で設定(２パターン用意。基本的に同じコード)
+        let uploadTask = imageRef.putData(userProfileImageData, metadata: nil){
+            (metaData,error) in
+            
+            if error != nil {
+                print(error)
+                return
+            }
+            
+            let uploadTask2 = imageRef2.putData(contentImageData, metadata: nil, completion: {
+                (metaData, error) in
+                
+                if error != nil {
+                    print(error)
+                    return
+                }
+            })
+        }
+        
+        
+            
+            
+    }
     
     
 
