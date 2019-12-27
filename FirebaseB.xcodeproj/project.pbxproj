@@ -15,6 +15,8 @@
 		A4856A3123B5EEF3001C2ACB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A4856A3023B5EEF3001C2ACB /* Assets.xcassets */; };
 		A4856A3423B5EEF3001C2ACB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A4856A3223B5EEF3001C2ACB /* LaunchScreen.storyboard */; };
 		A4856A4023B5F0D2001C2ACB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A4856A3F23B5F0D2001C2ACB /* GoogleService-Info.plist */; };
+		F58940AA23B60F4600A7B129 /* NextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58940A923B60F4600A7B129 /* NextViewController.swift */; };
+		F58940AC23B60F5C00A7B129 /* ThirdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58940AB23B60F5C00A7B129 /* ThirdViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +31,8 @@
 		A4856A3323B5EEF3001C2ACB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A4856A3523B5EEF3001C2ACB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A4856A3F23B5F0D2001C2ACB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F58940A923B60F4600A7B129 /* NextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextViewController.swift; sourceTree = "<group>"; };
+		F58940AB23B60F5C00A7B129 /* ThirdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
 		FD2ED5006B6BCEB653C39F88 /* Pods-FirebaseB.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FirebaseB.release.xcconfig"; path = "Target Support Files/Pods-FirebaseB/Pods-FirebaseB.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -85,6 +89,8 @@
 				A4856A2723B5EEF0001C2ACB /* AppDelegate.swift */,
 				A4856A2923B5EEF0001C2ACB /* SceneDelegate.swift */,
 				A4856A2B23B5EEF0001C2ACB /* ViewController.swift */,
+				F58940A923B60F4600A7B129 /* NextViewController.swift */,
+				F58940AB23B60F5C00A7B129 /* ThirdViewController.swift */,
 				A4856A2D23B5EEF0001C2ACB /* Main.storyboard */,
 				A4856A3023B5EEF3001C2ACB /* Assets.xcassets */,
 				A4856A3223B5EEF3001C2ACB /* LaunchScreen.storyboard */,
@@ -211,6 +217,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A4856A2C23B5EEF0001C2ACB /* ViewController.swift in Sources */,
+				F58940AA23B60F4600A7B129 /* NextViewController.swift in Sources */,
+				F58940AC23B60F5C00A7B129 /* ThirdViewController.swift in Sources */,
 				A4856A2823B5EEF0001C2ACB /* AppDelegate.swift in Sources */,
 				A4856A2A23B5EEF0001C2ACB /* SceneDelegate.swift in Sources */,
 			);
