@@ -86,13 +86,13 @@ class NextViewController: UIViewController,UIImagePickerControllerDelegate {
         //(DatabaseとStorageではURLが違う)
         
         let storage = Storage.storage().reference(forURL: /*"gs://swift5firebaseanonymousl-f7c71.appspot.com/"*/)
-         
-         
-         //データを更新、削除するためのパスを作成する。
-         //フォルダを作成していく。ここに画像が入っていく。
-         //フォルダの名前はそれぞれ、Users Contentsとしておく
-         let key = timeLineDB.child("Users").childByAutoId().key
-         let key2 = timeLineDB.child("Contens").childByAutoId().key
+        
+        
+        //データを更新、削除するためのパスを作成する。
+        //フォルダを作成していく。ここに画像が入っていく。
+        //フォルダの名前はそれぞれ、Users Contentsとしておく
+        let key = timeLineDB.child("Users").childByAutoId().key
+        let key2 = timeLineDB.child("Contens").childByAutoId().key
         
         /*
          参照を作成する
@@ -140,12 +140,49 @@ class NextViewController: UIViewController,UIImagePickerControllerDelegate {
                     return
                 }
             })
-        }
+        
+        //サーバーに画像に保存をした後に、画像が保存されているURLをFireBase Storageが返信してくる
+        imageRef.downloadURL(completion: { (url, error) in
+            
+            //urlに何かが入っていたら
+            if url != nil {
+                imageRef2.downloadURL(completion: { (url2, error) in
+                    
+                    //さらにurl2に何かが入っていたら
+                    if url2 != nil {
+                        
+                        //この段階でデバイス上で、userName,comment,userProfileImage:画像が保存されているURL,contents:画像が保存されているURL2,postDateの情報が揃って、これからFirebaseDBへ送信できる準備が出来ている状態。
+                        //キーバーリュー型で送信するものを準備する。
+                        //Dictionary型で作成したキー値(左側の""で囲っているもの)をもとに受信していく
+                        //abosoluteStringはURLを文字列型に変換しているもの
+                        //ServerValue.timestanp()で現在時刻を取得
+                        let timeLineInfo = ["userName":self.userName as Any, "userProfileImage":url?.absoluteString as Any, "contents":url2?.absoluteString as Any, "comment":self.commentTextField.text as Any, "postDate":ServerValue.timestamp()] as [String:Any]
+                        
+                        //                            let timeLineInfo:[String:Any] = ["userName":self.userName as Any, "userProfileImage":url?.absoluteString as Any, "contents":url2?.absoluteString as Any, "comment":self.commentTextField.text as Any, "postDate":ServerValue.timestamp()]
+                        //このコードでtimeLineInfoの情報をFirebaseDBへ送信したことを記載
+                        timeLineDB.updateChildValues(timeLineInfo)
+                        
+                        //ナビゲーションコントローラーでの”戻る"の意味になる。modal遷移でのdismissと同じ
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                })
+            }
+        })
         
         
-            
-            
     }
+    
+    //ここで「アップロードを続けてください」と書いてある
+    uploadTask.resume()
+    self.dismiss(animated: true, completion: nil)
+    
+}
+
+
+
+
+
+
     
     
 
