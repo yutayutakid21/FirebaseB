@@ -59,6 +59,14 @@ class ViewController: UIViewController {
             }
             performSegue(withIdentifier: "next1", sender: nil)
         }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "next1"{
+            let nextVC:NextViewController = segue.destination as! NextViewController
+            nextVC.passedUserID = user.uid!
+        }
+    }
+    
     
 }
 
