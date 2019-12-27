@@ -30,6 +30,75 @@ class ThirdViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    //FirebaseDBに画像URLなどの情報を送信して、その情報を受け取っている段階
+     func fetchContentsData(){
+         
+         //queryLimited toLast に100を入れることで、最新100件とsなる
+         //queryOrdered byChild にpostDateを入れることで、postDateの順番に値を取ってくる
+         //observe .value で取得していく
+         //snapShotに結果が入ってくる
+         //つまり、"timeLine"の下にある、最新の100件のデータを"postDate"の順番に取得していったら、snapShotの中にデータが入ってくる
+         let ref = Database.database().reference().child("timeLine").queryLimited(toLast: 100).queryOrdered(byChild: "postDate").observe(.value) { (snapShot) in
+             
+             //配列の中身を空にする
+             self.contentsArray.removeAll()
+             
+             if let snapShot = snapShot.children.allObjects as? [DataSnapshot]{
+                 
+                 for snap in snapShot{
+                     
+                     if let postData = snap.value as? [String:Any]{
+                         
+                         let userName = postData["userName"] as? String
+                         let userProfileImage = postData["userProfileImge"] as? String
+                         let contents = postData["contens"] as? String
+                         let comment = postData["comment"] as? String
+                         
+                         var postDate:CLong?
+                         
+                         if let postedDate = postData["postDate"] as? CLong{
+                             postDate = postedDate
+                         }
+                         
+                         //postDateを時間に変換していく。
+                         let timeString = self.convertTimeStamp(serverTimeStamp: postDate!)
+                         
+                         
+                         self.contentsArray.append(Contents(userNameString: userName!, profileImageString: userProfileImage!, contentImageString: contents!, commentString: comment!, postDateString: timeString))
+                     }
+                 }
+                 self.timeLineTableView.reloadData()
+                 
+                 
+                 //このままだと、一番最新のものが一番下のセルに入ってしまう状態になる。
+                 //そのため、タイムラインを一番下まで自動スクロールする設定をする。
+                 //-1 をしている理由。　contentArrayの最小値は1、indexPathの最小値は0 そのため-1をする。
+                 let indexPath = IndexPath(row: self.contentsArray.count - 1, section: 0)
+                 
+                 
+                 
+                 if self.contentsArray.count >= 5 {
+                 
+                     //ここでタイムラインを一番下まで自動的にスクロースさせるコードを記載
+                     self.timeLineTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+                 }
+             }
+         }
+     }
+     
+     
+     
+     func convertTimeStamp(serverTimeStamp: CLong) -> String{
+         
+         let x = serverTimeStamp / 1000
+         let date = Date(timeIntervalSince1970: TimeInterval(x))
+         let formatter = DateFormatter()
+         formatter.dateStyle = .long
+         formatter.timeStyle = .medium
+         
+         return formatter.string(from: date)
+     }
+    
 
     /*
     // MARK: - Navigation
