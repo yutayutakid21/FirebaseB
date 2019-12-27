@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 
 /*
@@ -24,11 +25,40 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    
+    @IBOutlet weak var disPlayLoginID: UILabel!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
 
 
+    @IBAction func loginButton(_ sender: Any) {
+        
+        Auth.auth().signInAnonymously { (authResult, error) in
+                
+                if error != nil {
+                    print("ログイン失敗やで")
+                    return
+
+                } else {
+                    print("ログイン成功しました")
+                }
+           
+                guard let user = authResult?.user else {
+                    return
+                }
+                
+                //ログインしたユーザーが匿名であるかをbool
+                //ログイン成功で匿名が保証されているので必要なし
+                //let isAnonymous = user.isAnonymous
+                self.displayLoginID.text = "   ID:\(user.uid)"
+                
+            }
+            performSegue(withIdentifier: "next1", sender: nil)
+        }
+    
 }
 
